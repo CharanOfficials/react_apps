@@ -1,0 +1,53 @@
+infinity
+-infinity
+NAN => Invlaid 
+-NAN
+NAN === NAN => will never equal with each itsef so use this to identify the !(a==a)
+-0 === 0
+
+
+Number.isNan
+
+function isNumberNaN(a) {
+  return ! (a == a);
+}
+//NaN -->  a == a , false a --> NaN
+
+function isNegativeZero(a){
+  if(typeof(a) != "number" ){
+    return false;
+  }
+
+  return a == 0 && 1/a == -Infinity;
+}
+function isNumberNaN(a) {
+  return ! (a == a);
+}
+//NaN -->  a == a , false a --> NaN
+
+function isNegativeZero(a){
+  if(typeof(a) != "number" ){
+    return false;
+  }
+
+  return a == 0 && 1/a == -Infinity;
+}
+
+NAN will always lead to false
+Once a NAN output will always be false
+
+Every primitive type get boxed in corresponding object which gives a feel that every thing in Js is am object
+
+https://docs.google.com/spreadsheets/d/1zsIjvyzbBfngCxeoQVhDg8YeGHeSSAaJDb0XEYjCXYY/edit#gid=0	
+
+function add(a, b=1){
+	return (a+b)}
+
+if default value is assigned in the parameter and the value is paased as undefined then the default value ofparameter will work
+else if null then null will be treated as 0 and default will not work
+
+Reference error => If something is no defined or exist
+Type error => If ype mismatch is there
+
+In expression function the name mentioned with function will will be accessible withinn the function body only
+

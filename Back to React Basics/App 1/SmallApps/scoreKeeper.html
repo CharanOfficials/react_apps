@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starting with JSX</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div style="text-align: center;" id="root"></div>
+<script type="text/babel">
+    let scores = 0
+    let wickets = 0
+    let ballWiseResult = []
+    let hit = 0
+    let inputRef = React.createRef()
+    const clickScore = (score) => {
+        hit = score        
+        rootElement.render(<App />)
+
+    }
+    const wicket = () => {
+        hit = "W"
+        rootElement.render(<App />)
+        
+    }
+    const ScoreButtons = () =>(
+        <div>
+            <button onClick = {() => clickScore(0)}>0</button>
+            <button onClick = {()=> clickScore(1)}>1</button>
+            <button onClick = {()=> clickScore(2)}>2</button>
+            <button onClick = {()=> clickScore(3)}>3</button>
+            <button onClick = {()=> clickScore(4)}>4</button>
+            <button onClick = {()=> clickScore(5)}>5</button>
+            <button onClick = {()=> clickScore(6)}>6</button>
+            <button onClick = {wicket}>Wicket</button>    
+        </div>
+    )
+    const Results = () => (
+            <div>
+                <p>{ballWiseResult}</p>
+                {ballWiseResult.map((res, index) => (
+                    <>
+                        {index % 6 === 0 ? <br /> : null}
+                        <span key={index}> {res == "W" ? <span key={index} style={{ color: "red" }}>{res}</span> : res == 0 ? <strong key={index}>.</strong> : res} &nbsp;&nbsp;&nbsp;</span>
+                    </>
+                ))}
+            </div>
+        )
+    const handleSubmit = (event)=>{
+        event.preventDefault()
+        ballWiseResult.unshift(
+            // <span>{hit}{", "}{inputRef.current.value}</span>
+            <span>{hit}, {inputRef.current.value}</span>
+            )
+        if(hit === "W"){
+            wickets += 1
+        }else{
+            scores += hit
+        }
+        hit = 0
+        inputRef.current.value = ""
+        // console.log(inputRef.current.value)
+        rootElement.render(<App />)
+    }
+    const Form = ()=>(
+        <>
+            <form onSubmit={handleSubmit}>
+                <input type="text" name="score" value={hit} disabled></input>
+                <input type="text" name="comment" placeholder= "Enter comment" ref={inputRef}></input>
+                <button>Submit</button>
+            </form>
+        </>
+    )
+    const App = ()=>{
+        return (
+            <>
+                <h1>SCORE KEEPER</h1>
+                <h2>Score: {scores}/ {wickets}</h2>
+                <ScoreButtons />
+                <br/>
+                <Form/>
+                <hr/>
+                {ballWiseResult.map((res,index)=>(
+                    <>
+                        <p key={index}>{res}</p>
+                    </>
+                ))}
+            </>
+        )
+    }
+    const  rootElement = ReactDOM.createRoot(document.getElementById("root"))
+    rootElement.render(<App/>)
+</script>
+</body>
+</html>
